@@ -1,13 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <title>SecPrint Awareness Test</title>
   </head>
   <body>
-    <h1>Start a new test</h1>
+    <div class="quiz-header">
+      <div class="quiz-header__counter">
+        <span>1</span>
+      </div>
+      <h1 class="quiz-header__title">اختبار الوعي الأمني</h1>
+      <div class="quiz-header__close">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="question">
+      <div class="question__right">
+        <h2 class="question__text">مانوع البريد التالي</h2>
+        <form id="answers">
+          <label for="firstAnswer" class="answer">
+            <input type="radio" name="answer" id="firstAnswer" value="1" />
+            تصيد الكتروني
+          </label>
+          <label for="secondAnswer" class="answer">
+            <input type="radio" name="answer" id="secondAnswer" value="2" />
+            ليس تصيد الكتروني
+          </label>
+          <label for="thirdAnswer" class="answer">
+            <input type="radio" name="answer" id="thirdAnswer" value="3" />
+            لا أدري
+          </label>
+          <div class="form-actions">
+            <input type="submit" value="Submit" class="continue" />
+          </div>
+        </form>
+      </div>
+      <div class="question__left">
+        <img
+          src="https://media.istockphoto.com/id/910633906/sv/foto/nya-apple-iphone-x-framsida-p%C3%A5-vit-bakgrund.jpg?s=1024x1024&w=is&k=20&c=2Uoeih4DvO_G71c8DiTIXfwUXKUeRN2rMV7Xojfq8-U="
+          alt=""
+          class="question-img"
+        />
+      </div>
+    </div>
     <div id="app"></div>
     <script src="./script.js"></script>
   </body>

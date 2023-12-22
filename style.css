@@ -1,3 +1,20 @@
 body {
-  background: rgb(247, 245, 245);
+  font-family: "Alexandria", sans-serif;
+  background: #3423a6;
+  color: #ffffff;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quiz-header__close {
+  width: 40px;
+  height: 40px;
+}
+
+.question {
+  display: flex;
 }
