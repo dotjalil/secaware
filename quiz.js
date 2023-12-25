@@ -23,11 +23,11 @@ const questions = [
     choices: [
       {
         text: "تصيد الكتروني",
-        isCorrect: false,
+        isCorrect: true,
       },
       {
         text: "ليس تصيد الكتروني",
-        isCorrect: true,
+        isCorrect: false,
       },
       {
         text: "لا ادري",
@@ -45,218 +45,168 @@ const questions = [
       },
       {
         text: "ليس تصيد الكتروني",
-        isCorrect: true,
+        isCorrect: false,
       },
       {
         text: "لا ادري",
-        isCorrect: false,
+        isCorrect: true,
       },
     ],
   },
 ];
 
-// function renderRightCol(qText, choices, qActions) {
-//   const rightColEl = document.querySelector(
-//     "#questionContainer .question__right"
-//   );
-//   const qTextEl = document.createElement("h2");
-//   qTextEl.classList.add("question__text");
-//   qTextEl.innerText = qText;
-//   const qAnswersEl = document.createElement("form");
-//   qAnswersEl.setAttribute("id", "answers");
-//   choices.forEach((choice, i) => {
-//     //<label for="firstAnswer" class="answer">
-//     // <input type="radio" name="answer" id="firstAnswer" value="1" />
-//     const answerLabelEl = document.createElement("label");
-//     answerLabelEl.classList.add("answer");
-//     answerLabelEl.setAttribute("for", `answer-${i}`);
-//     const answerInputEl = document.createElement("input");
-//     answerInputEl.setAttribute("type", "radio");
-//     answerInputEl.setAttribute("name", "answer");
-//     answerInputEl.setAttribute("id", `answer-${i}`);
-//     answerInputEl.setAttribute("value", i);
-//     answerLabelEl.appendChild(answerInputEl);
-//     answerLabelEl.append(choice.text);
-//     qAnswersEl.appendChild(answerLabelEl);
-//   });
-//   rightColEl.appendChild(qTextEl);
-//   rightColEl.appendChild(qAnswersEl);
-// }
+// Helpers
+function renderQuestion(question) {
+  const rightColEl = document.querySelector(
+    "#questionContainer .question__right"
+  );
+  const leftColEl = document.querySelector(
+    "#questionContainer .question__left"
+  );
+  // UI Reset
+  rightColEl.innerHTML = "";
+  leftColEl.innerHTML = "";
+  // Add question dom elements
+  const qTextEl = document.createElement("h2");
+  qTextEl.classList.add("question__text");
+  qTextEl.innerText = question.text;
+  const qAnswersEl = document.createElement("form");
+  qAnswersEl.setAttribute("id", "answers");
+  question.choices.forEach((choice, i) => {
+    //<label for="firstAnswer" class="answer">
+    // <input type="radio" name="answer" id="firstAnswer" value="1" />
+    const answerLabelEl = document.createElement("label");
+    answerLabelEl.classList.add("answer");
+    answerLabelEl.setAttribute("for", `answer-${i}`);
+    const answerInputEl = document.createElement("input");
+    answerInputEl.setAttribute("type", "radio");
+    answerInputEl.setAttribute("name", "answer");
+    answerInputEl.setAttribute("id", `answer-${i}`);
+    answerInputEl.setAttribute("value", i);
+    answerLabelEl.appendChild(answerInputEl);
+    answerLabelEl.append(choice.text);
+    qAnswersEl.appendChild(answerLabelEl);
+  });
+  rightColEl.appendChild(qTextEl);
+  rightColEl.appendChild(qAnswersEl);
 
-// function renderLeftCol(img) {
-//   const leftColEl = document.querySelector(
-//     "#questionContainer .question__left"
-//   );
-//   const qImgEl = document.createElement("img");
-//   qImgEl.setAttribute("src", img);
-//   leftColEl.appendChild(qImgEl);
-// }
+  const qImgEl = document.createElement("img");
+  qImgEl.setAttribute("src", question.img);
+  leftColEl.appendChild(qImgEl);
+}
 
-// function renderQuestion(q) {
-//   renderRightCol(q.text, q.choices, "submit");
-//   renderLeftCol(q.img);
-// }
-
-// renderQuestion(questions[0]);
-
-class Quiz {
-  constructor(questions) {
-    this.questions = questions;
-    this.currentQuestionIndex = 0;
+// Business Logic
+class Question {
+  constructor(text, img, choices) {
+    this.text = text;
+    this.img = img;
+    this.choices = choices;
+    this.selectedChoice;
     this.score = 0;
-    this.answers = [];
-
-    this.renderQuestion();
   }
 
-  renderQuestion() {
-    // Get current question obj
-    const currentQuestion = this.questions[this.currentQuestionIndex];
-
-    // Render the right col
-    this.renderRightCol(currentQuestion.text, currentQuestion.choices);
-
-    // Render the left col
-    this.renderLeftCol(currentQuestion.img);
+  recordAnswer(i) {
+    this.selectedChoice = i;
+    this.selfCorrect();
   }
 
-  renderRightCol(qText, choices) {
-    // Implement your rendering logic for the right column
-    const rightColEl = document.querySelector(
-      "#questionContainer .question__right"
-    );
-    const qTextEl = document.createElement("h2");
-    qTextEl.classList.add("question__text");
-    qTextEl.innerText = qText;
-    const qAnswersEl = document.createElement("form");
-    qAnswersEl.setAttribute("id", "answers");
-    choices.forEach((choice, i) => {
-      //<label for="firstAnswer" class="answer">
-      // <input type="radio" name="answer" id="firstAnswer" value="1" />
-      const answerLabelEl = document.createElement("label");
-      answerLabelEl.classList.add("answer");
-      answerLabelEl.setAttribute("for", `answer-${i}`);
-      const answerInputEl = document.createElement("input");
-      answerInputEl.setAttribute("type", "radio");
-      answerInputEl.setAttribute("name", "answer");
-      answerInputEl.setAttribute("id", `answer-${i}`);
-      answerInputEl.setAttribute("value", i);
-      answerLabelEl.appendChild(answerInputEl);
-      answerLabelEl.append(choice.text);
-      qAnswersEl.appendChild(answerLabelEl);
-    });
-    rightColEl.appendChild(qTextEl);
-    rightColEl.appendChild(qAnswersEl);
-    // Render Quz Nav Buttons
-    this.renderNavigationButtons();
-  }
-
-  renderLeftCol(img) {
-    // Implement your rendering logic for the left column
-    const leftColEl = document.querySelector(
-      "#questionContainer .question__left"
-    );
-    const qImgEl = document.createElement("img");
-    qImgEl.setAttribute("src", img);
-    leftColEl.appendChild(qImgEl);
-  }
-
-  renderNavigationButtons() {
-    const rightColEl = document.querySelector(
-      "#questionContainer .question__right"
-    );
-
-    // Remove existing navigation buttons
-    // Deprecated -> looks like it already gets removed when clearUI is called
-    // const existingButtons = document.querySelectorAll(".navigation-button");
-    // existingButtons.forEach((button) => button.remove());
-
-    // Add Next or Submit Quiz button based on the current question index
-    if (this.currentQuestionIndex === 0) {
-      // This is just the beginning of the quiz
-      this.createButton(
-        "Continue",
-        this.submitAnswer.bind(this, this.currentQuestionIndex)
-      );
-    } else if (this.currentQuestionIndex < this.questions.length - 1) {
-      // Quiz still has questions
-      this.createButton("Prev", this.prevQuestion.bind(this));
-      this.createButton("Next", this.submitAnswer.bind(this, ["m", "n"]));
+  selfCorrect() {
+    if (this.choices[this.selectedChoice].isCorrect) {
+      this.score = 1;
     } else {
-      // Last question in the quiz
-      this.createButton("Prev", this.prevQuestion.bind(this));
-      this.createButton(
-        "Submit Quiz",
-        this.submitAnswer.bind(this, ["m", "n"])
-      );
-    }
-
-    // Add Previous button if not on the first question
-    if (this.currentQuestionIndex > 0) {
-      // const prevQuest = this.previousQuestion;
-      // this.createButton("Previous", prevQuest.bind(this));
+      this.score = 0;
     }
   }
 
-  createButton(text, clickHandler) {
-    const button = document.createElement("button");
-    button.classList.add("navigation-button");
-    button.innerText = text;
-    button.addEventListener("click", () => {
-      console.log("clickHandler");
-      clickHandler("fixed value");
-    });
-    document
-      .querySelector("#questionContainer .question__right")
-      .appendChild(button);
-  }
-
-  nextQuestion() {
-    this.currentQuestionIndex++;
-    if (this.currentQuestionIndex < this.questions.length) {
-      this.renderQuestion();
-    } else {
-      // Quiz finished, implement what you want to do after the last question
-      console.log("Quiz End!");
-    }
-  }
-
-  prevQuestion() {
-    console.log("prevQuestion()");
-  }
-
-  clearUI() {
-    console.log("clear ui");
-    const rightColEl = document.querySelector(
-      "#questionContainer .question__right"
-    );
-    const leftColEl = document.querySelector(
-      "#questionContainer .question__left"
-    );
-
-    // clear cols
-    rightColEl.innerHTML = "";
-    leftColEl.innerHTML = "";
-  }
-
-  // Add any other methods or event handlers you need
-
-  // You can add a method to handle the submission of the current question
-  submitAnswer(questionIndex, selctedAnswer) {
-    console.log("questionIndex", questionIndex);
-    console.log("selectedAnswer", selctedAnswer);
-    // Implement your logic for handling the submitted answer
-    // For example, check if the answer is correct, update score, etc.
-    this.answers.push({
-      questionIndex,
-      selctedAnswer,
-    });
-    console.log("answers", this.answers);
-    // Move to the next question
-    this.clearUI();
-    this.nextQuestion();
+  getSelectedChoiceIndex() {
+    return this.selectedChoice;
   }
 }
 
-// Instantiate the Quiz class with your questions array
-const quiz = new Quiz(questions);
+class QuizUI {
+  constructor(questions) {
+    this.questions = questions.map(
+      (q) => new Question(q.text, q.img, q.choices)
+    );
+
+    this.currentQuestionIndex = 0;
+  }
+
+  render() {
+    console.log("Render Quiz!");
+    renderQuestion(this.questions[this.currentQuestionIndex]);
+    this.renderNavButtons();
+  }
+
+  next() {
+    console.log("Next Question!");
+    this.questions[this.currentQuestionIndex].recordAnswer(this.getChecked());
+    this.currentQuestionIndex++;
+    this.render();
+  }
+
+  prev() {
+    console.log("Prev. Question!");
+  }
+
+  getScore() {
+    console.log("Get Quiz Score!");
+    let initialScore = 0;
+    return this.questions.reduce((acc, curr) => acc + curr.score, initialScore);
+  }
+
+  end() {
+    console.log("End Quiz!");
+    this.questions[this.currentQuestionIndex].recordAnswer(this.getChecked());
+    console.log(this.questions);
+    console.log("Score: ", this.getScore());
+  }
+
+  printQuestions() {
+    console.log("Questions: ", this.questions);
+  }
+
+  renderNavButtons() {
+    if (this.currentQuestionIndex === 0) {
+      // first question, render next button only
+      this.renderNextButton();
+    } else if (this.currentQuestionIndex < this.questions.length - 1) {
+      // mid question, render prev and next button
+      this.renderNextButton();
+      this.renderPrevButton();
+    } else {
+      // last question render prev and finish button
+      this.renderFinishButton();
+      this.renderPrevButton();
+    }
+  }
+
+  renderNextButton() {
+    const nextButton = document.createElement("button");
+    nextButton.innerText = "Next";
+    nextButton.addEventListener("click", this.next.bind(this));
+    document.querySelector(".question__right").appendChild(nextButton);
+  }
+
+  renderPrevButton() {
+    const prevButton = document.createElement("button");
+    prevButton.innerText = "Prev.";
+    prevButton.addEventListener("click", this.prev.bind(this));
+    document.querySelector(".question__right").appendChild(prevButton);
+  }
+
+  renderFinishButton() {
+    const finishButton = document.createElement("button");
+    finishButton.innerText = "Finish";
+    finishButton.addEventListener("click", this.end.bind(this));
+    document.querySelector(".question__right").appendChild(finishButton);
+  }
+
+  getChecked() {
+    return +document.querySelector('input[name="answer"]:checked').value;
+  }
+}
+
+// Init App
+const quiz = new QuizUI(questions);
+quiz.render();
