@@ -183,7 +183,12 @@ class QuizUI {
 
   renderNextButton() {
     const nextButton = document.createElement("button");
-    nextButton.innerText = "Next";
+    if (this.currentQuestionIndex === 0) {
+      nextButton.innerText = "Continue";
+      nextButton.classList.add("continue");
+    } else {
+      nextButton.innerText = "Next";
+    }
     nextButton.addEventListener("click", this.next.bind(this));
     document.querySelector(".question__right").appendChild(nextButton);
   }
