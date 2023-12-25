@@ -83,6 +83,9 @@ function renderQuestion(question) {
     answerInputEl.setAttribute("name", "answer");
     answerInputEl.setAttribute("id", `answer-${i}`);
     answerInputEl.setAttribute("value", i);
+    if (i === question.selectedChoice) {
+      answerInputEl.checked = true;
+    }
     answerLabelEl.appendChild(answerInputEl);
     answerLabelEl.append(choice.text);
     qAnswersEl.appendChild(answerLabelEl);
@@ -128,12 +131,15 @@ class QuizUI {
     this.questions = questions.map(
       (q) => new Question(q.text, q.img, q.choices)
     );
-
     this.currentQuestionIndex = 0;
   }
 
   render() {
     console.log("Render Quiz!");
+    console.log(
+      "Current Question: ",
+      this.questions[this.currentQuestionIndex]
+    );
     renderQuestion(this.questions[this.currentQuestionIndex]);
     this.renderNavButtons();
   }
@@ -152,19 +158,26 @@ class QuizUI {
 
   prev() {
     console.log("Prev. Question!");
+    this.currentQuestionIndex--;
+    this.render();
+  }
+
+  end() {
+    console.log("End Quiz!");
+    try {
+      this.questions[this.currentQuestionIndex].recordAnswer(this.getChecked());
+      console.log(this.questions);
+      console.log("Score: ", this.getScore());
+    } catch (err) {
+      console.log("Error: ", err);
+      alert("Select Answer!");
+    }
   }
 
   getScore() {
     console.log("Get Quiz Score!");
     let initialScore = 0;
     return this.questions.reduce((acc, curr) => acc + curr.score, initialScore);
-  }
-
-  end() {
-    console.log("End Quiz!");
-    this.questions[this.currentQuestionIndex].recordAnswer(this.getChecked());
-    console.log(this.questions);
-    console.log("Score: ", this.getScore());
   }
 
   printQuestions() {
