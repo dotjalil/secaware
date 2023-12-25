@@ -90,7 +90,22 @@ img {
   content: "1";
 }
 
-.continue {
+.actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+}
+
+.w-60 {
+  width: 60%;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.next {
   width: 100%;
   background-color: rgba(35, 35, 77, 0.37);
   border: none;
@@ -99,7 +114,15 @@ img {
   border-radius: 8px;
   cursor: pointer;
   font-family: "Alexandria", sans-serif;
-  margin-top: 24px;
+}
+
+.prev {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Alexandria", sans-serif;
 }
 
 label.checked {

@@ -76,7 +76,7 @@ function renderQuestion(question) {
     //<label for="firstAnswer" class="answer">
     // <input type="radio" name="answer" id="firstAnswer" value="1" />
     const answerLabelEl = document.createElement("label");
-    answerLabelEl.classList.add("answer");
+    answerLabelEl.classList.add("answer", "checked");
     answerLabelEl.setAttribute("for", `answer-${i}`);
     const answerInputEl = document.createElement("input");
     answerInputEl.setAttribute("type", "radio");
@@ -140,9 +140,14 @@ class QuizUI {
 
   next() {
     console.log("Next Question!");
-    this.questions[this.currentQuestionIndex].recordAnswer(this.getChecked());
-    this.currentQuestionIndex++;
-    this.render();
+    try {
+      this.questions[this.currentQuestionIndex].recordAnswer(this.getChecked());
+      this.currentQuestionIndex++;
+      this.render();
+    } catch (err) {
+      console.log("Error: ", err);
+      alert("Select Answer!");
+    }
   }
 
   prev() {
@@ -169,42 +174,61 @@ class QuizUI {
   renderNavButtons() {
     if (this.currentQuestionIndex === 0) {
       // first question, render next button only
-      this.renderNextButton();
+      this.renderNavButtonsInsideContainer(this.createNextButton());
     } else if (this.currentQuestionIndex < this.questions.length - 1) {
       // mid question, render prev and next button
-      this.renderNextButton();
-      this.renderPrevButton();
+      // this.renderNextButton();
+      // this.renderPrevButton();
+      this.renderNavButtonsInsideContainer(
+        this.createNextButton(),
+        this.createPrevButton()
+      );
     } else {
       // last question render prev and finish button
-      this.renderFinishButton();
-      this.renderPrevButton();
+      // this.renderFinishButton();
+      // this.renderPrevButton();
+      this.renderNavButtonsInsideContainer(
+        this.createFinishButton(),
+        this.createPrevButton()
+      );
     }
   }
 
-  renderNextButton() {
+  createNextButton() {
     const nextButton = document.createElement("button");
     if (this.currentQuestionIndex === 0) {
-      nextButton.innerText = "Continue";
-      nextButton.classList.add("continue");
+      // At the beginning of quiz
+      nextButton.innerText = "السؤال التالي";
+      nextButton.classList.add("next");
     } else {
-      nextButton.innerText = "Next";
+      nextButton.innerText = "السؤال التالي";
+      nextButton.classList.add("next", "w-60");
     }
     nextButton.addEventListener("click", this.next.bind(this));
-    document.querySelector(".question__right").appendChild(nextButton);
+    return nextButton;
   }
 
-  renderPrevButton() {
+  createPrevButton() {
     const prevButton = document.createElement("button");
-    prevButton.innerText = "Prev.";
+    prevButton.innerText = "السابق";
+    prevButton.classList.add("prev", "w-40");
     prevButton.addEventListener("click", this.prev.bind(this));
-    document.querySelector(".question__right").appendChild(prevButton);
+    return prevButton;
   }
 
-  renderFinishButton() {
+  createFinishButton() {
     const finishButton = document.createElement("button");
-    finishButton.innerText = "Finish";
+    finishButton.innerText = "انهاء الاختبار";
+    finishButton.classList.add("next", "w-60");
     finishButton.addEventListener("click", this.end.bind(this));
-    document.querySelector(".question__right").appendChild(finishButton);
+    return finishButton;
+  }
+
+  renderNavButtonsInsideContainer(...navButtons) {
+    const navBtnsContainer = document.createElement("div");
+    navBtnsContainer.classList.add("actions");
+    navButtons.forEach((btn) => navBtnsContainer.appendChild(btn));
+    document.querySelector(".question__right").appendChild(navBtnsContainer);
   }
 
   getChecked() {
