@@ -76,15 +76,28 @@ function renderQuestion(question) {
     //<label for="firstAnswer" class="answer">
     // <input type="radio" name="answer" id="firstAnswer" value="1" />
     const answerLabelEl = document.createElement("label");
-    answerLabelEl.classList.add("answer", "checked");
+    answerLabelEl.classList.add("answer");
     answerLabelEl.setAttribute("for", `answer-${i}`);
+    answerLabelEl.addEventListener("click", handleChoiceLabelClick);
     const answerInputEl = document.createElement("input");
     answerInputEl.setAttribute("type", "radio");
     answerInputEl.setAttribute("name", "answer");
     answerInputEl.setAttribute("id", `answer-${i}`);
     answerInputEl.setAttribute("value", i);
+    answerInputEl.addEventListener("click", (e) => {
+      e.stopPropagation();
+      resetChoiceLabelsClasses();
+      const parentLabel = e.target.closest("label");
+      if (parentLabel) {
+        // Add a new class to the parent label
+        parentLabel.classList.add("checked");
+        // Your additional logic for the input click event here
+        console.log("Input clicked, parent label class added!");
+      }
+    });
     if (i === question.selectedChoice) {
       answerInputEl.checked = true;
+      answerLabelEl.classList.add("checked");
     }
     answerLabelEl.appendChild(answerInputEl);
     answerLabelEl.append(choice.text);
@@ -96,6 +109,17 @@ function renderQuestion(question) {
   const qImgEl = document.createElement("img");
   qImgEl.setAttribute("src", question.img);
   leftColEl.appendChild(qImgEl);
+}
+function handleChoiceLabelClick(e) {
+  console.log("Clicked: ", e.target);
+  // Remove checked class
+  resetChoiceLabelsClasses();
+  e.target.classList.add("checked");
+}
+function resetChoiceLabelsClasses() {
+  document
+    .querySelectorAll("label.answer")
+    .forEach((label) => label.classList.remove("checked"));
 }
 
 // Business Logic
@@ -190,16 +214,12 @@ class QuizUI {
       this.renderNavButtonsInsideContainer(this.createNextButton());
     } else if (this.currentQuestionIndex < this.questions.length - 1) {
       // mid question, render prev and next button
-      // this.renderNextButton();
-      // this.renderPrevButton();
       this.renderNavButtonsInsideContainer(
         this.createNextButton(),
         this.createPrevButton()
       );
     } else {
       // last question render prev and finish button
-      // this.renderFinishButton();
-      // this.renderPrevButton();
       this.renderNavButtonsInsideContainer(
         this.createFinishButton(),
         this.createPrevButton()
