@@ -241,6 +241,12 @@ class QuizUI {
       nextButton.innerText = "السؤال التالي";
       nextButton.classList.add("next", "w-60");
     }
+    if (
+      this.questions[this.currentQuestionIndex].selectedChoice !== undefined
+    ) {
+      // Add the ready class if the question has a pre-selected choice
+      nextButton.classList.add("ready");
+    }
     nextButton.addEventListener("click", this.next.bind(this));
     return nextButton;
   }
