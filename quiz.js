@@ -112,9 +112,13 @@ function renderQuestion(question) {
 }
 function handleChoiceLabelClick(e) {
   console.log("Clicked: ", e.target);
+  const nextButton = document.querySelector(".next");
   // Remove checked class
   resetChoiceLabelsClasses();
+  // Add .checked to the label
   e.target.classList.add("checked");
+  // Add .ready to the next button
+  nextButton.classList.add("ready");
 }
 function resetChoiceLabelsClasses() {
   document
