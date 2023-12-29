@@ -1,7 +1,7 @@
 const questions = [
   {
     text: "1. ما نوع البريد التالي",
-    img: "/images/Question-1.png",
+    img: "/images/question-1.png",
     choices: [
       {
         text: "تصيد الكتروني",
@@ -19,7 +19,7 @@ const questions = [
   },
   {
     text: "2. ما نوع البريد التالي",
-    img: "/images/Question-1.png",
+    img: "/images/question-2.png",
     choices: [
       {
         text: "تصيد الكتروني",
@@ -36,8 +36,8 @@ const questions = [
     ],
   },
   {
-    text: "3. ما نوع البريد التالي",
-    img: "/images/Question-1.png",
+    text: "3. مانوع الرسالة التالية:",
+    img: "/images/question-3.png",
     choices: [
       {
         text: "تصيد الكتروني",
@@ -125,6 +125,30 @@ function resetChoiceLabelsClasses() {
     .querySelectorAll("label.answer")
     .forEach((label) => label.classList.remove("checked"));
 }
+function cancelQuiz() {
+  if (window.confirm("هل أنت متأكد أنك تريد الغاء الاختبار؟")) {
+    window.open("./index.html", "_self");
+  }
+}
+function initProgressCounter() {
+  const counterElement = document.querySelector(".quiz-header__counter");
+  const progressDivElement = document.createElement("div");
+  progressDivElement.classList.add("progress-bar");
+  const progressSpanElement = document.createElement("span");
+  progressSpanElement.innerText = "1";
+  progressDivElement.appendChild(progressSpanElement);
+  const progressElement = document.createElement("progress");
+  progressElement.setAttribute("value", "0");
+  progressElement.setAttribute("min", "0");
+  progressElement.setAttribute("max", "100");
+  progressElement.setAttribute(
+    "style",
+    "visibility: hidden; height: 0; width: 0;"
+  );
+  progressElement.innerText = "76%";
+  progressDivElement.appendChild(progressElement);
+  counterElement.appendChild(progressDivElement);
+}
 
 // Business Logic
 class Question {
@@ -160,6 +184,7 @@ class QuizUI {
       (q) => new Question(q.text, q.img, q.choices)
     );
     this.currentQuestionIndex = 0;
+    initProgressCounter();
   }
 
   render() {
@@ -170,6 +195,7 @@ class QuizUI {
     );
     renderQuestion(this.questions[this.currentQuestionIndex]);
     this.renderNavButtons();
+    this.updateProgressUI();
   }
 
   next() {
@@ -194,8 +220,10 @@ class QuizUI {
     console.log("End Quiz!");
     try {
       this.questions[this.currentQuestionIndex].recordAnswer(this.getChecked());
-      console.log(this.questions);
-      console.log("Score: ", this.getScore());
+      window.open(
+        `result.html?score=${this.getScore()}&total=${this.questions.length}`,
+        "_self"
+      );
     } catch (err) {
       console.log("Error: ", err);
       alert("Select Answer!");
@@ -276,6 +304,15 @@ class QuizUI {
 
   getChecked() {
     return +document.querySelector('input[name="answer"]:checked').value;
+  }
+
+  updateProgressUI() {
+    const counterUI = document.querySelector(".progress-bar span");
+    counterUI.innerText = this.currentQuestionIndex + 1;
+    document.documentElement.style.setProperty(
+      "--percentage",
+      `${((this.currentQuestionIndex + 1) * 100) / this.questions.length}%`
+    );
   }
 }
 

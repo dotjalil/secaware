@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>SecPrint Awareness Test</title>
+  </head>
+  <body class="quiz">
+    <div class="container">
+      <div class="quiz-header">
+        <div class="quiz-header__counter"></div>
+        <h1 class="quiz-header__title">اختبار الوعي الأمني</h1>
+        <div class="quiz-header__close">
+          <button onclick="cancelQuiz()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="question" id="questionContainer">
+        <div class="question__right"></div>
+        <div class="question__left"></div>
+      </div>
+    </div>
+    <script src="./embedHeight.js"></script>
+    <script src="./quiz.js"></script>
+  </body>
+</html>

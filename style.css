@@ -1,8 +1,50 @@
+:root {
+  --percentage: 10%;
+}
+
 body {
   font-family: "Alexandria", sans-serif;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+body.quiz {
   background: #3423a6;
   color: #ffffff;
-  padding-top: 48px;
+}
+
+.container.welcome {
+  display: flex;
+  gap: 30px;
+}
+
+.centered-vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.welcome .title {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.welcome .description {
+  color: rgba(124, 124, 124, 1);
+  margin: 0;
+}
+
+.welcome .action {
+  display: inline-block;
+  padding: 12px 30px;
+  color: rgba(255, 255, 255, 1);
+  background-color: rgba(5, 158, 151, 1);
+  border-radius: 8px;
+  text-decoration: none;
+  margin: 0;
 }
 
 img {
@@ -28,6 +70,15 @@ img {
   background-color: rgba(255, 255, 255, 0.4);
   display: flex;
   justify-content: center;
+}
+
+.quiz-header__close button {
+  background-color: transparent;
+  margin: 0;
+  padding: 5px;
+  outline: none;
+  border: none;
+  cursor: pointer;
 }
 
 .quiz-header__close svg {
@@ -84,11 +135,12 @@ img {
   height: 50px;
   border-radius: 50%;
   background: radial-gradient(closest-side, #3323a5 79%, transparent 80% 100%),
-    conic-gradient(#2bd591 75%, #ffffff39 0);
+    conic-gradient(#2bd591 var(--percentage), #ffffff39 0);
 }
 
+/* Set this from inside quiz.js */
 .progress-bar::before {
-  content: "1";
+  content: "";
 }
 
 .actions {
