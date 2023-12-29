@@ -1,7 +1,7 @@
 const questions = [
   {
     text: "1. ما نوع البريد التالي",
-    img: "/images/question-1.png",
+    img: "./images/question-1.png",
     choices: [
       {
         text: "تصيد الكتروني",
@@ -19,7 +19,7 @@ const questions = [
   },
   {
     text: "2. ما نوع البريد التالي",
-    img: "/images/question-2.png",
+    img: "./images/question-2.png",
     choices: [
       {
         text: "تصيد الكتروني",
@@ -37,7 +37,7 @@ const questions = [
   },
   {
     text: "3. مانوع الرسالة التالية:",
-    img: "/images/question-3.png",
+    img: "./images/question-3.png",
     choices: [
       {
         text: "تصيد الكتروني",
