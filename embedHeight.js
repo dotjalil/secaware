@@ -18,7 +18,6 @@ function sendMessage() {
 }
 
 const observer = new ResizeObserver(function () {
-  console.log("New scrollHeight", body.scrollHeight);
   sendMessage();
 });
 
