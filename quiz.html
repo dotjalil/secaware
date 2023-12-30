@@ -42,7 +42,17 @@
         <div class="question__left"></div>
       </div>
     </div>
-    <script src="./embedHeight.js"></script>
     <script src="./quiz.js"></script>
+    <!-- Communicate page height with anywhere you'd embed your quiz -->
+    <script type="module">
+      // Importing the doMyMagic function from mysolution.js
+      import { sendObservedPageHeight } from "./embedHeight.js";
+      console.log(
+        "./embedHeight.js imported successfully",
+        sendObservedPageHeight
+      );
+      // Now you can use doMyMagic
+      sendObservedPageHeight();
+    </script>
   </body>
 </html>

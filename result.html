@@ -19,7 +19,17 @@
       <h2>الاجابات الصحيحة: <span id="score"></span></h2>
       <h2>مجموع الأسئلة: <span id="total"></span> سؤال</h2>
     </div>
-    <script src="./embedHeight.js"></script>
     <script src="./result.js"></script>
+    <!-- Communicate page height with anywhere you'd embed your quiz -->
+    <script type="module">
+      // Importing the doMyMagic function from mysolution.js
+      import { sendObservedPageHeight } from "./embedHeight.js";
+      console.log(
+        "./embedHeight.js imported successfully",
+        sendObservedPageHeight
+      );
+      // Now you can use doMyMagic
+      sendObservedPageHeight();
+    </script>
   </body>
 </html>

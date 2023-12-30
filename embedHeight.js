@@ -1,25 +1,32 @@
-const body = document.querySelector("body");
+export function sendObservedPageHeight() {
+  const body = document.querySelector("body");
 
-// Calculate the page scroll height
-function calculatePageScrollHeight() {
-  return document.documentElement.scrollHeight;
-}
+  // Calculate the page scroll height
+  function calculatePageScrollHeight() {
+    return document.documentElement.scrollHeight;
+  }
 
-function sendMessage() {
-  // Send a message to the parent window
-  // when the page is embedded, it communicates the page height
-  window.parent.postMessage(
-    {
-      contentChanged: true,
-      contentHeight: calculatePageScrollHeight(),
-    },
-    "*"
-  ); // Allow communication with any origin
-}
+  function sendMessage() {
+    // Send a message to the parent window
+    // when the page is embedded, it communicates the page height
+    window.parent.postMessage(
+      {
+        contentChanged: true,
+        contentHeight: calculatePageScrollHeight(),
+      },
+      "*"
+    ); // Allow communication with any origin
+  }
 
-const observer = new ResizeObserver(function () {
+  // Send height on initial page load
   sendMessage();
-});
 
-// This is the critical part: We observe the size of all children!
-observer.observe(body);
+  // Observe height change due to any activity
+  const observer = new ResizeObserver(function () {
+    console.log("Body height changed: ", calculatePageScrollHeight());
+    sendMessage();
+  });
+
+  // This is the critical part: We observe the size of all children!
+  observer.observe(body);
+}

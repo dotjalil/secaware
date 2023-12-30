@@ -27,6 +27,17 @@
         <img src="./images/welcome.png" alt="guy with a laptop" />
       </div>
     </div>
-    <script src="./embedHeight.js"></script>
+
+    <!-- Communicate page height with anywhere you'd embed your quiz -->
+    <script type="module">
+      // Importing the doMyMagic function from mysolution.js
+      import { sendObservedPageHeight } from "./embedHeight.js";
+      console.log(
+        "./embedHeight.js imported successfully",
+        sendObservedPageHeight
+      );
+      // Now you can use doMyMagic
+      sendObservedPageHeight();
+    </script>
   </body>
 </html>
