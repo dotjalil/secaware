@@ -1,62 +1,84 @@
-const questions = [
-  {
-    text: "1. ما نوع البريد التالي",
-    img: "./images/question-1.png",
-    choices: [
-      {
-        text: "تصيد الكتروني",
-        isCorrect: false,
-      },
-      {
-        text: "ليس تصيد الكتروني",
-        isCorrect: true,
-      },
-      {
-        text: "لا ادري",
-        isCorrect: false,
-      },
-    ],
-  },
-  {
-    text: "2. ما نوع البريد التالي",
-    img: "./images/question-2.png",
-    choices: [
-      {
-        text: "تصيد الكتروني",
-        isCorrect: true,
-      },
-      {
-        text: "ليس تصيد الكتروني",
-        isCorrect: false,
-      },
-      {
-        text: "لا ادري",
-        isCorrect: false,
-      },
-    ],
-  },
-  {
-    text: "3. مانوع الرسالة التالية:",
-    img: "./images/question-3.png",
-    choices: [
-      {
-        text: "تصيد الكتروني",
-        isCorrect: false,
-      },
-      {
-        text: "ليس تصيد الكتروني",
-        isCorrect: false,
-      },
-      {
-        text: "لا ادري",
-        isCorrect: true,
-      },
-    ],
-  },
-];
+console.log("quiz.js");
+
+// Check mode: normal | preview
+console.log(
+  "getQuizMode()",
+  getQuizMode(),
+  "getSubmittedAnswers()",
+  getSubmittedAnswers()
+);
+
+// const questions = [
+//   {
+//     text: "1. ما نوع البريد التالي",
+//     img: "./images/question-1.png",
+//     choices: [
+//       {
+//         text: "تصيد الكتروني",
+//         isCorrect: false,
+//       },
+//       {
+//         text: "ليس تصيد الكتروني",
+//         isCorrect: true,
+//       },
+//       {
+//         text: "لا ادري",
+//         isCorrect: false,
+//       },
+//     ],
+//   },
+//   {
+//     text: "2. ما نوع البريد التالي",
+//     img: "./images/question-2.png",
+//     choices: [
+//       {
+//         text: "تصيد الكتروني",
+//         isCorrect: true,
+//       },
+//       {
+//         text: "ليس تصيد الكتروني",
+//         isCorrect: false,
+//       },
+//       {
+//         text: "لا ادري",
+//         isCorrect: false,
+//       },
+//     ],
+//   },
+//   {
+//     text: "3. مانوع الرسالة التالية:",
+//     img: "./images/question-3.png",
+//     choices: [
+//       {
+//         text: "تصيد الكتروني",
+//         isCorrect: false,
+//       },
+//       {
+//         text: "ليس تصيد الكتروني",
+//         isCorrect: false,
+//       },
+//       {
+//         text: "لا ادري",
+//         isCorrect: true,
+//       },
+//     ],
+//   },
+// ];
 
 // Helpers
-function renderQuestion(question) {
+function getQuizMode() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const mode = urlParams.get("mode");
+  if (mode) {
+    return "preview";
+  }
+  return "normal";
+}
+function getSubmittedAnswers() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return JSON.parse(urlParams.get("answers"));
+}
+function renderQuestion(question, questionIndex) {
   const rightColEl = document.querySelector(
     "#questionContainer .question__right"
   );
@@ -84,23 +106,43 @@ function renderQuestion(question) {
     answerInputEl.setAttribute("name", "answer");
     answerInputEl.setAttribute("id", `answer-${i}`);
     answerInputEl.setAttribute("value", i);
-    answerInputEl.addEventListener("click", (e) => {
-      e.stopPropagation();
-      resetChoiceLabelsClasses();
-      const parentLabel = e.target.closest("label");
-      if (parentLabel) {
-        // Add a new class to the parent label
-        parentLabel.classList.add("checked");
-        // Your additional logic for the input click event here
-        console.log("Input clicked, parent label class added!");
+    answerInputEl.addEventListener("click", handleInputClick);
+    if (MODE === "preview") {
+      answerLabelEl.removeEventListener("click", handleChoiceLabelClick);
+      answerInputEl.removeEventListener("click", handleInputClick);
+      console.log("this", this);
+      if (i === ANSWERED[quiz.getCurrentQuestionIndex()]) {
+        console.log("Selected Answer", answerInputEl.checked);
+        answerInputEl.checked = true;
+        answerLabelEl.classList.add("checked");
+        // answerInputEl.setAttribute("disabled", true);
+      } else {
+        answerInputEl.setAttribute("disabled", true);
       }
-    });
-    if (i === question.selectedChoice) {
-      answerInputEl.checked = true;
-      answerLabelEl.classList.add("checked");
+    } else {
+      if (i === question.selectedChoice) {
+        answerInputEl.checked = true;
+        answerLabelEl.classList.add("checked");
+      }
     }
     answerLabelEl.appendChild(answerInputEl);
-    answerLabelEl.append(choice.text);
+    // console.log("This is the correct answer!", ANSWERED[quiz]);
+    if (
+      MODE === "preview" /* preview */ &&
+      i === ANSWERED[quiz.getCurrentQuestionIndex()] /* chosen */ &&
+      quiz.isCorrectAnswer(i) /* is correct */
+    ) {
+      console.log("This is a correct answer!");
+      answerLabelEl.append(choice.text + " ✔");
+    } else if (
+      MODE === "preview" &&
+      i === ANSWERED[quiz.getCurrentQuestionIndex()] /* chosen */
+    ) {
+      console.log("You didn't get this one!!");
+      answerLabelEl.append(choice.text + " ❌");
+    } else {
+      answerLabelEl.append(choice.text);
+    }
     qAnswersEl.appendChild(answerLabelEl);
   });
   rightColEl.appendChild(qTextEl);
@@ -119,6 +161,17 @@ function handleChoiceLabelClick(e) {
   e.target.classList.add("checked");
   // Add .ready to the next button
   nextButton.classList.add("ready");
+}
+function handleInputClick(e) {
+  e.stopPropagation();
+  resetChoiceLabelsClasses();
+  const parentLabel = e.target.closest("label");
+  if (parentLabel) {
+    // Add a new class to the parent label
+    parentLabel.classList.add("checked");
+    // Your additional logic for the input click event here
+    console.log("Input clicked, parent label class added!");
+  }
 }
 function resetChoiceLabelsClasses() {
   document
@@ -179,11 +232,17 @@ class Question {
 
 class QuizUI {
   constructor(questions) {
+    // this.questions = questions.map(
+    //   (q) => new Question(q.text, q.img, q.choices)
+    // );
+    this.currentQuestionIndex = 0;
+    initProgressCounter();
+  }
+
+  loadQuestions(questions) {
     this.questions = questions.map(
       (q) => new Question(q.text, q.img, q.choices)
     );
-    this.currentQuestionIndex = 0;
-    initProgressCounter();
   }
 
   render() {
@@ -313,8 +372,32 @@ class QuizUI {
       `${((this.currentQuestionIndex + 1) * 100) / this.questions.length}%`
     );
   }
+
+  getCurrentQuestionIndex() {
+    return this.currentQuestionIndex;
+  }
+
+  isCorrectAnswer(selectedAnswerIndex) {
+    console.log(this.questions[this.currentQuestionIndex].choices);
+    return this.questions[this.currentQuestionIndex].choices[
+      selectedAnswerIndex
+    ].isCorrect;
+  }
 }
 
-// Init App
-const quiz = new QuizUI(questions);
-quiz.render();
+// Start App!
+// Fetch questions
+let questions;
+const MODE = getQuizMode();
+const ANSWERED = getSubmittedAnswers();
+const quiz = new QuizUI();
+
+fetch("./questions.json")
+  .then((res) => res.json())
+  .then((data) => {
+    console.log("data:", data);
+    questions = data;
+    // Init App
+    quiz.loadQuestions(questions);
+    quiz.render();
+  });

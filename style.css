@@ -136,6 +136,29 @@ img {
     conic-gradient(#2bd591 var(--percentage), #ffffff39 0);
 }
 
+/* Result Page */
+.result-header {
+  justify-content: center;
+}
+.result-header__title {
+  font-size: 24px;
+}
+.card {
+  max-width: 525px;
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  border: none;
+  border-radius: 8px;
+  padding: 48px 24px;
+  background-color: white;
+  color: rgba(124, 124, 124, 1);
+}
+
+.centered {
+  margin: 0 auto;
+}
+
 /* Set this from inside quiz.js */
 .progress-bar::before {
   content: "";
