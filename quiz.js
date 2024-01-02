@@ -126,9 +126,8 @@ function resetChoiceLabelsClasses() {
     .forEach((label) => label.classList.remove("checked"));
 }
 function cancelQuiz() {
-  if (window.confirm("هل أنت متأكد أنك تريد الغاء الاختبار؟")) {
-    window.open("./index.html", "_self");
-  }
+  console.log("Close quiz!");
+  window.open("./index.html", "_self");
 }
 function initProgressCounter() {
   const counterElement = document.querySelector(".quiz-header__counter");

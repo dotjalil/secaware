@@ -72,13 +72,11 @@ img {
   justify-content: center;
 }
 
-.quiz-header__close button {
+.quiz-header__close a {
+  display: flex;
   background-color: transparent;
   margin: 0;
   padding: 5px;
-  outline: none;
-  border: none;
-  cursor: pointer;
 }
 
 .quiz-header__close svg {
@@ -185,5 +183,112 @@ label.checked {
 
 button.ready {
   background-color: rgba(42, 212, 144, 1);
+  color: white;
+}
+
+/* Dialog */
+.modal-window {
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.25);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+.modal-window:target {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-window > div {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2em;
+  background: white;
+}
+.modal-window header {
+  font-weight: bold;
+}
+.modal-window h1 {
+  font-size: 150%;
+  margin: 0 0 15px;
+}
+.modal-close {
+  color: #aaa;
+  line-height: 50px;
+  font-size: 80%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 70px;
+  text-decoration: none;
+}
+.modal-close:hover {
+  color: black;
+}
+
+.dialog {
+  max-width: 525px;
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  border: none;
+  border-radius: 8px;
+  padding: 48px 24px;
+}
+
+.dialog .title {
+  color: rgba(23, 23, 56, 1);
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+}
+
+.dialog .description {
+  font-size: 24px;
+  line-height: 38.4px;
+  font-weight: 400;
+  text-align: center;
+  color: rgba(124, 124, 124, 1);
+  margin: 0;
+}
+
+.dialog .dialog-actions {
+  display: flex;
+  gap: 30px;
+}
+
+.dialog-actions button,
+.dialog-actions a {
+  font-family: "Alexandria", sans-serif;
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.dialog-actions #cancel {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  width: 70%;
+  background-color: rgba(5, 158, 151, 1);
+  color: white;
+}
+
+.dialog-actions #close {
+  width: 30%;
+  background-color: rgba(35, 35, 77, 1);
   color: white;
 }

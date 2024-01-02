@@ -19,7 +19,7 @@
         <div class="quiz-header__counter"></div>
         <h1 class="quiz-header__title">اختبار الوعي الأمني</h1>
         <div class="quiz-header__close">
-          <button onclick="cancelQuiz()">
+          <a class="btn" href="#open-modal">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -34,7 +34,23 @@
                 d="M6 18 18 6M6 6l12 12"
               />
             </svg>
-          </button>
+          </a>
+          <!-- <button onclick="cancelQuiz()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </button> -->
         </div>
       </div>
       <div class="question" id="questionContainer">
@@ -42,6 +58,32 @@
         <div class="question__left"></div>
       </div>
     </div>
+
+    <!-- Dialog -->
+    <!-- <dialog>
+      <h1 class="title">الخروج من الاختبار ؟</h1>
+      <p class="description">
+        هل تريد الخروج من الاختبار في حالة الخروج سوف تخسر التقدم الخاص بك !
+      </p>
+      <div class="dialog-actions">
+        <button id="cancel" autofocus>متابعة الاختبار</button>
+        <button id="close">الخروج</button>
+      </div>
+    </dialog> -->
+
+    <div id="open-modal" class="modal-window">
+      <div class="dialog">
+        <h1 class="title">الخروج من الاختبار ؟!</h1>
+        <div class="description">
+          هل تريد الخروج من الاختبار في حالة الخروج سوف تخسر التقدم الخاص بك !
+        </div>
+        <div class="dialog-actions">
+          <a href="#" id="cancel" autofocus>متابعة الاختبار</a>
+          <button id="close" onclick="cancelQuiz();">الخروج</button>
+        </div>
+      </div>
+    </div>
+
     <script src="./quiz.js"></script>
     <!-- Communicate page height with anywhere you'd embed your quiz -->
     <script type="module">
