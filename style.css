@@ -1,5 +1,7 @@
 :root {
   --percentage: 10%;
+  --result-percentage: 10%;
+  --result-color: ;
 }
 
 body {
@@ -318,6 +320,76 @@ button.ready {
 }
 
 .dialog-actions #close {
+  width: 30%;
+  background-color: rgba(35, 35, 77, 1);
+  color: white;
+}
+
+/** Results Page */
+.result-title {
+  text-align: center;
+  font-size: 24px;
+  color: rgba(35, 35, 77, 1);
+  font-weight: 500;
+  margin: 0;
+}
+.result-header__counter {
+  display: flex;
+  justify-content: center;
+}
+.result-header__counter .progress-bar {
+  width: 92px;
+  height: 92px;
+  background: radial-gradient(closest-side, #edfbf4 93%, transparent 80% 100%),
+    conic-gradient(#2ad490 var(--result-percentage), #ffffff39 0);
+  /* rgba(43, 213, 145, 0.1) */
+}
+.result-header__counter .progress-bar span {
+  background: -webkit-linear-gradient(
+    rgba(43, 213, 145, 1),
+    rgba(0, 132, 126, 1)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 24px;
+  font-weight: 600;
+}
+.result-header__counter .progress-bar span::after {
+  content: "%";
+  font-size: 12px;
+  margin-left: 4px;
+}
+.final-words {
+  text-align: center;
+  line-height: 25.6px;
+  margin: 0;
+}
+
+.card__actions {
+  display: flex;
+  gap: 30px;
+}
+
+.card__actions button,
+.card__actions a {
+  font-family: "Alexandria", sans-serif;
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.card__actions .primary {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  width: 70%;
+  background-color: rgba(5, 158, 151, 1);
+  color: white;
+}
+
+.card__actions .secondary {
   width: 30%;
   background-color: rgba(35, 35, 77, 1);
   color: white;
