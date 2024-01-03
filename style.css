@@ -3,7 +3,9 @@
   --result-percentage: 10%;
   --result-color: ;
 }
-
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: "Alexandria", sans-serif;
   padding-top: 48px;
@@ -393,4 +395,33 @@ button.ready {
   width: 30%;
   background-color: rgba(35, 35, 77, 1);
   color: white;
+}
+
+/*****
+RESPONSIVENESS
+Mobile
+*****/
+
+@media screen and (max-width: 425px) {
+  body {
+    margin: 0;
+  }
+  .container {
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .welcome {
+    flex-direction: column-reverse;
+  }
+  .centered-vertical {
+    align-items: center;
+  }
+  .question {
+    flex-direction: column-reverse;
+  }
+  .question__left,
+  .question__right {
+    width: 100%;
+  }
 }
