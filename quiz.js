@@ -140,6 +140,12 @@ function renderQuestion(question, questionIndex) {
     ) {
       console.log("You didn't get this one!!");
       answerLabelEl.append(choice.text + " ❌");
+    } else if (MODE === "preview" && quiz.isCorrectAnswer(i) /* is correct */) {
+      const rightAnswerEl = document.createElement("span");
+      rightAnswerEl.classList.add("right-answer-indicator");
+      rightAnswerEl.innerText = "الاجابة الصحيحة";
+      answerLabelEl.append(choice.text);
+      answerLabelEl.appendChild(rightAnswerEl);
     } else {
       answerLabelEl.append(choice.text);
     }
@@ -278,8 +284,12 @@ class QuizUI {
     console.log("End Quiz!");
     try {
       this.questions[this.currentQuestionIndex].recordAnswer(this.getChecked());
+      const selectedAnswers = this.questions.map((q) => q.selectedChoice);
+      console.log("selectedAnswers: ", selectedAnswers);
       window.open(
-        `result.html?score=${this.getScore()}&total=${this.questions.length}`,
+        `result.html?score=${this.getScore()}&total=${
+          this.questions.length
+        }&answers=${JSON.stringify(selectedAnswers)}`,
         "_self"
       );
     } catch (err) {
