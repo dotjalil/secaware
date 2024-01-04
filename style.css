@@ -436,7 +436,6 @@ button.ready {
 }
 .google-review-link__right {
   display: flex;
-
   gap: 10px;
 }
 .google-review-link__right div {
@@ -454,6 +453,13 @@ button.ready {
 RESPONSIVENESS
 Mobile
 *****/
+
+/* Tablet */
+@media screen and (max-width: 1023px) {
+  .container {
+    max-width: 100%;
+  }
+}
 
 @media screen and (max-width: 425px) {
   body {
