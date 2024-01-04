@@ -1,7 +1,10 @@
 :root {
   --percentage: 10%;
   --result-percentage: 10%;
-  --result-color: ;
+  --result-stroke-color: #2ad490;
+  --result-bg-color: #edfbf4;
+  --result-text-gradient-color-1: rgba(43, 213, 145, 1);
+  --result-text-gradient-color-2: rgba(0, 132, 126, 1);
 }
 * {
   box-sizing: border-box;
@@ -342,14 +345,20 @@ button.ready {
 .result-header__counter .progress-bar {
   width: 92px;
   height: 92px;
-  background: radial-gradient(closest-side, #edfbf4 93%, transparent 80% 100%),
-    conic-gradient(#2ad490 var(--result-percentage), #ffffff39 0);
-  /* rgba(43, 213, 145, 0.1) */
+  background: radial-gradient(
+      closest-side,
+      var(--result-bg-color) 93%,
+      transparent 80% 100%
+    ),
+    conic-gradient(
+      var(--result-stroke-color) var(--result-percentage),
+      #ffffff39 0
+    ); /* Placeholder */
 }
 .result-header__counter .progress-bar span {
   background: -webkit-linear-gradient(
-    rgba(43, 213, 145, 1),
-    rgba(0, 132, 126, 1)
+    var(--result-text-gradient-color-1),
+    var(--result-text-gradient-color-2)
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -396,7 +405,51 @@ button.ready {
   background-color: rgba(35, 35, 77, 1);
   color: white;
 }
+/* Google Review */
+.google-review {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 24px;
+  border-top: rgba(248, 248, 248, 1) solid 1.5px;
+}
+.google-review h3 {
+  color: rgba(35, 35, 77, 1);
+}
+.google-review h3,
+.google-review p {
+  margin: 0;
+}
+.google-review__link {
+  display: flex;
+  border-radius: 12px;
+  border: rgba(249, 249, 249, 1) solid 1.5px;
+  box-shadow: 0px 4px 16px 0px rgba(52, 35, 166, 0.05);
+  padding: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+.google-review__link {
+  text-decoration: none;
+  color: rgba(35, 35, 77, 1);
+}
+.google-review-link__right {
+  display: flex;
 
+  gap: 10px;
+}
+.google-review-link__right div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.google-review-link__left {
+  padding: 12px 30px;
+  color: rgba(255, 202, 5, 1);
+  background-color: rgba(255, 202, 5, 0.1);
+  border-radius: 8px;
+}
 /*****
 RESPONSIVENESS
 Mobile

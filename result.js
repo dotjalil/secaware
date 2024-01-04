@@ -9,7 +9,42 @@ document.documentElement.style.setProperty(
   "--result-percentage",
   `${percentage}%`
 );
-
+if (percentage < 50) {
+  document.querySelector(".result-title").innerText = "تحتاج إلى المساعدة!";
+  document.documentElement.style.setProperty(
+    "--result-stroke-color",
+    "rgba(255, 38, 38, 1)"
+  );
+  document.documentElement.style.setProperty("--result-bg-color", "#fefcfb");
+  document.documentElement.style.setProperty(
+    "--result-text-gradient-color-1",
+    "rgba(255, 38, 38, 1)"
+  );
+  document.documentElement.style.setProperty(
+    "--result-text-gradient-color-2",
+    "rgba(161, 0, 0, 1)"
+  );
+} else if (percentage < 75) {
+  document.querySelector(".result-title").innerText = "جيد!";
+  document.documentElement.style.setProperty(
+    "--result-stroke-color",
+    "rgba(255, 95, 4, 1)"
+  );
+  document.documentElement.style.setProperty("--result-bg-color", "#ffefe9");
+  document.documentElement.style.setProperty(
+    "--result-text-gradient-color-1",
+    "rgba(255, 207, 38, 1)"
+  );
+  document.documentElement.style.setProperty(
+    "--result-text-gradient-color-2",
+    "rgba(255, 95, 4, 1)"
+  );
+} else {
+  // document.documentElement.style.setProperty("--result-stroke-color", );
+  // document.documentElement.style.setProperty("--result-bg-color", );
+  // document.documentElement.style.setProperty("--result-text-gradient-color-1", );
+  // document.documentElement.style.setProperty("--result-text-gradient-color-2", );
+}
 // show score and total
 // document.querySelector("#score").innerText = score;
 // document.querySelector("#total").innerText = total;
